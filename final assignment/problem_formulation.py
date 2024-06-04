@@ -63,6 +63,8 @@ def get_model_for_problem_formulation(problem_formulation_id):
     # Uncertainties and Levers:
     # Specify uncertainties range:
     Real_uncert = {"Bmax": [30, 350], "pfail": [0, 1]}  # m and [.]
+    #ADDITION DELTA. Uncertainty numb of events
+    Real_uncert_Numb_Events = {"num_events" : [30,120]}
     # breach growth rate [m/day]
     cat_uncert_loc = {"Brate": (1.0, 1.5, 10)}
 
@@ -125,6 +127,11 @@ def get_model_for_problem_formulation(problem_formulation_id):
                 levers.append(
                     IntegerParameter(name, dike_lev[lev_name][0], dike_lev[lev_name][1])
                 )
+    # ADDITION DElTA
+    for uncert_name in Real_uncert_Numb_Events.keys():
+        name = uncert_name
+        lower, upper = Real_uncert_Numb_Events[uncert_name]
+        uncertainties.append(RealParameter(name, lower, upper))
 
     # load uncertainties and levers in dike_model:
     dike_model.uncertainties = uncertainties
