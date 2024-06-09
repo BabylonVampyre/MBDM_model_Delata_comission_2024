@@ -125,7 +125,7 @@ class DikeNetwork:
     def __call__(self, timestep=1, **kwargs):
 
         G = copy.deepcopy(self.G)
-        Qpeaks = self.Qpeaks
+        #Qpeaks = self.Qpeaks
         dikelist = self.dikelist
 
         # Call RfR initialization:
@@ -137,6 +137,22 @@ class DikeNetwork:
             if "discount rate" in item:
                 G.nodes[item]["value"] = kwargs[item]
             # the rest of the times you always get a string like {}_{}:
+
+            ##Added by Delta Commission for uncertainty num_events
+            elif item == 'num_events':
+                self.num_events = kwargs[item]
+                lowQ, highQ = werklijn_inv([0.992, 0.99992], self.A)
+                self.Qpeaks = np.unique(
+                    np.asarray(
+                        [np.random.uniform(lowQ, highQ) / 6 for _ in range(0, self.num_events)]
+                    )
+                )[::-1]
+                Qpeaks = self.Qpeaks
+
+                # Probabiltiy of exceedence for the discharge @ Lobith (i.e. times 6)
+                self.p_exc = 1 - werklijn_cdf(self.Qpeaks * 6, self.A)
+
+
             else:
                 string1, string2 = item.split("_")
 

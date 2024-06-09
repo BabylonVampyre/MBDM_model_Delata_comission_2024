@@ -64,13 +64,14 @@ def get_model_for_problem_formulation(problem_formulation_id):
     # Specify uncertainties range:
     Real_uncert = {"Bmax": [30, 350], "pfail": [0, 1]}  # m and [.]
     #ADDITION DELTA. Uncertainty numb of events
-    Real_uncert_Numb_Events = {"num_events" : [30,120]}
+    #Real_uncert_Numb_Events = {"num_events" : [30,120]}
     # breach growth rate [m/day]
     cat_uncert_loc = {"Brate": (1.0, 1.5, 10)}
 
+    event_range=tuple(np.arange(30,120,1))
+    cat_num_event = {"num_events":event_range}
     cat_uncert = {
-        f"discount rate {n}": (1.5, 2.5, 3.5, 4.5) for n in function.planning_steps
-    }
+        f"discount rate {n}": (1.5, 2.5, 3.5, 4.5) for n in function.planning_steps}
 
     Int_uncert = {"A.0_ID flood wave shape": [0, 132]}
     # Range of dike heightening:
@@ -87,6 +88,11 @@ def get_model_for_problem_formulation(problem_formulation_id):
 
     for uncert_name in cat_uncert.keys():
         categories = cat_uncert[uncert_name]
+        uncertainties.append(CategoricalParameter(uncert_name, categories))
+
+
+    for uncert_name in cat_num_event.keys():
+        categories = cat_num_event[uncert_name]
         uncertainties.append(CategoricalParameter(uncert_name, categories))
 
     for uncert_name in Int_uncert.keys():
@@ -128,10 +134,10 @@ def get_model_for_problem_formulation(problem_formulation_id):
                     IntegerParameter(name, dike_lev[lev_name][0], dike_lev[lev_name][1])
                 )
     # ADDITION DElTA
-    for uncert_name in Real_uncert_Numb_Events.keys():
-        name = uncert_name
-        lower, upper = Real_uncert_Numb_Events[uncert_name]
-        uncertainties.append(RealParameter(name, lower, upper))
+    #for uncert_name in Real_uncert_Numb_Events.keys():
+    #    name = uncert_name
+    #   lower, upper = Real_uncert_Numb_Events[uncert_name]
+    #   uncertainties.append(RealParameter(name, lower, upper))
 
     # load uncertainties and levers in dike_model:
     dike_model.uncertainties = uncertainties
