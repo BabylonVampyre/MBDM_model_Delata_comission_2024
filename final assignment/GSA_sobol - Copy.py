@@ -8,6 +8,7 @@ import mpi4py
 
 from ema_workbench import (
     Model,
+    Policy,
     RealParameter,
     ScalarOutcome,
     ema_logging,
@@ -55,27 +56,70 @@ if __name__ == "__main__":
     
     # enlisting policy levers, their types (RealParameter/IntegerParameter), lower boundary, and upper boundary
     levers = copy.deepcopy(dike_model.levers)
-    
+
+    # defining specific policies
+    # for example, policy 1 is about extra protection in upper boundary
+    # policy 2 is about extra protection in lower boundary
+    # policy 3 is extra protection in random locations
+
+
+    def get_do_nothing_dict():
+        return {l.name: 0 for l in dike_model.levers}
+
+    do_nothing = Policy(
+            "policy 0",
+            **dict(
+                get_do_nothing_dict()
+            )
+        )
+
+    policies = [
+        Policy(
+            "policy 1",
+            **dict(
+                get_do_nothing_dict(),
+                **{"0_RfR 0": 1, "0_RfR 1": 1, "0_RfR 2": 1, "A.1_DikeIncrease 0": 5}
+            )
+        ),
+        Policy(
+            "policy 2",
+            **dict(
+                get_do_nothing_dict(),
+                **{"4_RfR 0": 1, "4_RfR 1": 1, "4_RfR 2": 1, "A.5_DikeIncrease 0": 5}
+            )
+        ),
+        Policy(
+            "policy 3",
+            **dict(
+                get_do_nothing_dict(),
+                **{"1_RfR 0": 1, "2_RfR 1": 1, "3_RfR 2": 1, "A.3_DikeIncrease 0": 5}
+            )
+        ),
+    ]
+
+
+
+
     
 #------------------------------------------------------------------------------------------------------------
     # Note that we switch to the MPIEvaluator here
-    n_scenarios=10#100 #1000
+    n_scenarios= 100
     with MultiprocessingEvaluator(dike_model) as evaluator:
     #with MPIEvaluator(dike_model) as evaluator:
-            results=evaluator.perform_experiments(scenarios=n_scenarios,uncertainty_sampling=Samplers.SOBOL) #
+            results=evaluator.perform_experiments(scenarios=n_scenarios, policies=do_nothing,uncertainty_sampling=Samplers.SOBOL) #
  
     # Save the results
-    save_results(results, "dike_model_test_sobol_no_policies.tar.gz")
+    save_results(results, "results/dike_model_test_sobol_do_nothing.tar.gz")
 
-#    experiments, outcomes = results
+    experiments, outcomes = results
     
-#    kpi_list=list(outcomes.keys())
+    kpi_list=list(outcomes.keys())
 
- #   for ooi in kpi_list:
- #       sobol_stats, s2, s2_conf = analyze(results, ooi)
- #       save_results(sobol_stats, f"sobol_stats_{ooi}.tar.gz")
- #      save_results(s2, f"s2_{ooi}.tar.gz")
- #       save_results(s2_conf, f"s2_conf_{ooi}.tar.gz")
+    for ooi in kpi_list:
+        sobol_stats, s2, s2_conf = analyze(results, ooi)
+        save_results(sobol_stats, f"results/sobol_stats_{ooi}.tar.gz")
+        save_results(s2, f"results/s2_{ooi}.tar.gz")
+        save_results(s2_conf, f"results/s2_conf_{ooi}.tar.gz")
 
     
 
