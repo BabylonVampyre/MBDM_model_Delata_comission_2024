@@ -103,13 +103,14 @@ if __name__ == "__main__":
     
 #------------------------------------------------------------------------------------------------------------
     # Note that we switch to the MPIEvaluator here
-    n_scenarios= 100
+    n_scenarios = 100
+    n_policies = 10
     with MultiprocessingEvaluator(dike_model) as evaluator:
     #with MPIEvaluator(dike_model) as evaluator:
-            results=evaluator.perform_experiments(scenarios=n_scenarios, policies=do_nothing,uncertainty_sampling=Samplers.SOBOL) #
+            results=evaluator.perform_experiments(scenarios=n_scenarios, policies=n_policies,lever_sampling=Samplers.SOBOL,uncertainty_sampling=Samplers.SOBOL) #
  
     # Save the results
-    save_results(results, "results/dike_model_test_sobol_do_nothing.tar.gz")
+    save_results(results, "results/dike_model_test_sobol_uncertainty_and_policy_sampling.tar.gz")
 
     experiments, outcomes = results
     
