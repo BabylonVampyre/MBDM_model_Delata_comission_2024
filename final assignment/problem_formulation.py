@@ -234,6 +234,14 @@ def get_model_for_problem_formulation(problem_formulation_id):
         rfr_costs_variables = []
         evac_cost_variables = []
         casuality_varaibles = []
+        cost_variables = []
+
+        
+        cost_variables.extend(
+            [f"{dike}_Dike Investment Costs" for dike in function.dikelist]
+            + [f"RfR Total Costs"]
+            + [f"Expected Evacuation Costs"]
+        )      
 
         damage_variables.extend(
             [f"{dike}_Expected Annual Damage" for dike in function.dikelist]
@@ -275,6 +283,12 @@ def get_model_for_problem_formulation(problem_formulation_id):
             ScalarOutcome(
                 "Expected Number of Deaths",
                 variable_name=[var for var in casuality_varaibles],
+                function=sum_over,
+                kind=direction,
+            ),
+            ScalarOutcome(
+                "Total Investment Costs",
+                variable_name=[var for var in cost_variables],
                 function=sum_over,
                 kind=direction,
             ),
