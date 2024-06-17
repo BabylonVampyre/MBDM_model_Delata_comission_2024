@@ -50,7 +50,8 @@ if __name__ == "__main__":
 
     ref_scenario = Scenario("reference", **scen1)
 
-    constraints = [Constraint("Expected Number of Deaths", outcome_names="Expected Number of Deaths", function=lambda x : max(0,x-0.001)), #min(0,x)
+
+    constraints = [Constraint("Expected Number of Deaths", outcome_names="Expected Number of Deaths", function=lambda x : max(0,x-0.001)),
                    Constraint("Total Investment Costs", outcome_names="Total Investment Costs", function=lambda x: max(0,x-300e6))]
 
     #convergence_metrics = [EpsilonProgress()]
@@ -62,12 +63,12 @@ if __name__ == "__main__":
         "directed search results",
         [l.name for l in model.levers],
         [o.name for o in model.outcomes],
-        base_filename="directed_search_convergence.tar.gz",
+        base_filename="directed_search_convergence_big_nfe.tar.gz",
     ),
         EpsilonProgress(),
     ]
 
-    nfe = 10000
+    nfe = 20000 #10000
 
 
     with MultiprocessingEvaluator(model) as evaluator:
@@ -81,6 +82,6 @@ if __name__ == "__main__":
             constraints=constraints
             )
     #
-    results.to_csv("directed search results/dike_model_policy_design.csv")
-    convergence.to_csv("directed search results/dike_model_policy_design_convergence.csv")
+    results.to_csv("directed search results/dike_model_policy_design_big_nfe.csv")
+    convergence.to_csv("directed search results/dike_model_policy_design_convergence_big_nfe.csv")
 
