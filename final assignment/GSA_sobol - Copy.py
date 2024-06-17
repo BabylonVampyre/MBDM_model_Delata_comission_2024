@@ -49,7 +49,7 @@ if __name__ == "__main__":
     #----------------------------------------------------------------------------------------------
     # choose problem formulation number, between 0-5
     # each problem formulation has its own list of outcomes
-    dike_model, planning_steps = get_model_for_problem_formulation(5)
+    dike_model, planning_steps = get_model_for_problem_formulation(2)
     
     # enlisting uncertainties, their types (RealParameter/IntegerParameter/CategoricalParameter), lower boundary, and upper boundary
     uncertainties = copy.deepcopy(dike_model.uncertainties)
@@ -103,14 +103,14 @@ if __name__ == "__main__":
     
 #------------------------------------------------------------------------------------------------------------
     # Note that we switch to the MPIEvaluator here
-    n_scenarios = 100
-    n_policies = 10
+    n_scenarios = 1000
+    n_policies = 1
     with MultiprocessingEvaluator(dike_model) as evaluator:
     #with MPIEvaluator(dike_model) as evaluator:
-            results=evaluator.perform_experiments(scenarios=n_scenarios, policies=n_policies,lever_sampling=Samplers.SOBOL,uncertainty_sampling=Samplers.SOBOL) #
+            results=evaluator.perform_experiments(scenarios=n_scenarios, policies=do_nothing,uncertainty_sampling=Samplers.SOBOL) #
  
     # Save the results
-    save_results(results, "results/dike_model_test_sobol_uncertainty_and_policy_sampling.tar.gz")
+    save_results(results, "results/dike_model_test_sobol_uncertainty_sampling_do_nothing_formulation_2.tar.gz")
 
     experiments, outcomes = results
     
