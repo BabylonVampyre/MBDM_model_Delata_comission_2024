@@ -50,7 +50,7 @@ if __name__ == "__main__":
 
     ref_scenario = Scenario("reference", **scen1)
 
-    constraints = [Constraint("Expected Number of Deaths", outcome_names="Expected Number of Deaths", function=lambda x : min(0,x)),
+    constraints = [Constraint("Expected Number of Deaths", outcome_names="Expected Number of Deaths", function=lambda x : max(0,x-0.001)), #min(0,x)
                    Constraint("Total Investment Costs", outcome_names="Total Investment Costs", function=lambda x: max(0,x-300e6))]
 
     #convergence_metrics = [EpsilonProgress()]

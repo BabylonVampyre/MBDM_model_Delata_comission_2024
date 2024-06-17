@@ -49,7 +49,7 @@ if __name__ == "__main__":
     #----------------------------------------------------------------------------------------------
     # choose problem formulation number, between 0-5
     # each problem formulation has its own list of outcomes
-    dike_model, planning_steps = get_model_for_problem_formulation(2)
+    dike_model, planning_steps = get_model_for_problem_formulation(5)
     
     # enlisting uncertainties, their types (RealParameter/IntegerParameter/CategoricalParameter), lower boundary, and upper boundary
     uncertainties = copy.deepcopy(dike_model.uncertainties)
@@ -110,7 +110,7 @@ if __name__ == "__main__":
             results=evaluator.perform_experiments(scenarios=n_scenarios, policies=do_nothing,uncertainty_sampling=Samplers.SOBOL) #
  
     # Save the results
-    save_results(results, "results/dike_model_test_sobol_uncertainty_sampling_do_nothing_formulation_2.tar.gz")
+    save_results(results, "results/dike_model_test_sobol_uncertainty_sampling_do_nothing_formulation_5_second_attempt.tar.gz")
 
     experiments, outcomes = results
     
