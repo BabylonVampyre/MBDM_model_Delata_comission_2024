@@ -1,0 +1,22 @@
+,reproduce coverage,reproduce density
+num_events,99.99999999999999,99.99999999999999
+A.4_pfail,40.0,40.0
+A.5_pfail,40.0,40.0
+A.3_pfail,10.0,10.0
+A.0_ID flood wave shape,0.0,0.0
+A.1_Bmax,0.0,0.0
+A.1_Brate,0.0,0.0
+A.1_pfail,0.0,0.0
+A.2_Bmax,0.0,0.0
+A.2_Brate,0.0,0.0
+A.2_pfail,0.0,0.0
+A.3_Bmax,0.0,0.0
+A.3_Brate,0.0,0.0
+A.4_Bmax,0.0,0.0
+A.4_Brate,0.0,0.0
+A.5_Bmax,0.0,0.0
+A.5_Brate,0.0,0.0
+discount rate 0,0.0,0.0
+discount rate 1,0.0,0.0
+discount rate 2,0.0,0.0
+policy,0.0,0.0
