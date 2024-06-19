@@ -63,39 +63,44 @@ if __name__ == "__main__":
     # policy 3 is extra protection in random locations
 
 
-    def get_do_nothing_dict():
-        return {l.name: 0 for l in dike_model.levers}
+    #def get_do_nothing_dict():
+    #    return {l.name: 0 for l in dike_model.levers}
 
-    do_nothing = Policy(
-            "policy 0",
-            **dict(
-                get_do_nothing_dict()
-            )
-        )
+    #do_nothing = Policy(
+     #       "policy 0",
+     #       **dict(
+     #           get_do_nothing_dict()
+     #       )
+     #   )
 
-    policies = [
-        Policy(
-            "policy 1",
-            **dict(
-                get_do_nothing_dict(),
-                **{"0_RfR 0": 1, "0_RfR 1": 1, "0_RfR 2": 1, "A.1_DikeIncrease 0": 5}
-            )
-        ),
-        Policy(
-            "policy 2",
-            **dict(
-                get_do_nothing_dict(),
-                **{"4_RfR 0": 1, "4_RfR 1": 1, "4_RfR 2": 1, "A.5_DikeIncrease 0": 5}
-            )
-        ),
-        Policy(
-            "policy 3",
-            **dict(
-                get_do_nothing_dict(),
-                **{"1_RfR 0": 1, "2_RfR 1": 1, "3_RfR 2": 1, "A.3_DikeIncrease 0": 5}
-            )
-        ),
-    ]
+    #policies = [
+    #    Policy(
+    #        "policy 1",
+    #        **dict(
+    #            get_do_nothing_dict(),
+    #            **{"0_RfR 0": 1, "0_RfR 1": 1, "0_RfR 2": 1, "A.1_DikeIncrease 0": 5}
+    #        )
+    #    ),
+    #    Policy(
+    #        "policy 2",
+    #        **dict(
+    #            get_do_nothing_dict(),
+    #            **{"4_RfR 0": 1, "4_RfR 1": 1, "4_RfR 2": 1, "A.5_DikeIncrease 0": 5}
+    #        )
+    #    ),
+    #    Policy(
+    #        "policy 3",
+    #        **dict(
+    #            get_do_nothing_dict(),
+    #            **{"1_RfR 0": 1, "2_RfR 1": 1, "3_RfR 2": 1, "A.3_DikeIncrease 0": 5}
+    #        )
+    #   ),
+    #]
+
+    test=pd.read_csv("Filtered Policies - to be tested for robustness.csv",index_col=0)
+    test=test.drop(labels=['RfR_agg'],axis=1)
+    policies=test.to_dict('index')
+    policies=[Policy(f"policy {k}", **dict(v)) for k,v in policies.items()]
 
 
 
@@ -104,13 +109,13 @@ if __name__ == "__main__":
 #------------------------------------------------------------------------------------------------------------
     # Note that we switch to the MPIEvaluator here
     n_scenarios = 1000
-    n_policies = 1
+    #n_policies = 1
     with MultiprocessingEvaluator(dike_model) as evaluator:
     #with MPIEvaluator(dike_model) as evaluator:
-            results=evaluator.perform_experiments(scenarios=n_scenarios, policies=do_nothing,uncertainty_sampling=Samplers.SOBOL) #
+            results=evaluator.perform_experiments(scenarios=n_scenarios, policies=policies,uncertainty_sampling=Samplers.SOBOL) #
  
     # Save the results
-    save_results(results, "results/dike_model_test_sobol_uncertainty_sampling_do_nothing_formulation_5_second_attempt.tar.gz")
+    save_results(results, "directed search results/dike_model_test_sobol_uncertainty_sampling_on_resultant_policies.tar.gz")
 
     experiments, outcomes = results
     
