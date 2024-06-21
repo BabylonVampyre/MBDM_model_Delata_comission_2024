@@ -33,11 +33,39 @@ To run this, make sure all these libraries are installed, this can also be done 
   - ```pip install SALib```
 
 ## Repository Structure
-The previous structure from Ciuollo's code was kept the same. Some files have been added or modified.
 
-### [problem formulation](problem_formulation.py)
-The problem forumlation file has been adjusted so that the number of events can be evaluated as an uncertainty.
+### Files
+The previous structure from Ciuollo's code was kept the same. Some files have been added or modified, which are listed here.
 
-### TODO: continue, once files are cleaned more
+#### [problem formulation](problem_formulation.py)
+ - This is the original problem formulation notebook given in the final assignment folder which has been adjusted.
+#### [feature scoring](FeatureScoring.ipynb)
+ - This file was used to generate the heatmaps for the final GSA that is in report appendix/
+#### [Global Sensitivity Analysis Sobol](GSA_sobol%20-%20Copy.py)
+ - This file was used to conduct and generate data for Sobol analysis using sobol uncertainty sampling.
+#### [Sobal Analysis](Sobol Analysis.ipynb)
+ - This file contains code that analyses Sobol results
+#### [Dike Model Optimization for Directed Search](dike_model_optimization-for-directed-search.py)
+ - This file was used to conduct MOEA and generate candidate policy solutions.
+#### [Analysis of Directed Search](Analysis of Directed Search.ipynb)
+ - This file calculates and evaluates convergence from directed search policy design
+#### [Robustness Evaluation](Robustness_Evaluation.py)
+ - This file was used for the generation of data when re-evaluating the selected policies under multiple scenarios. The data generated here is used in Robustness_evaluation.ipynb.
+#### [Robustness Evaluation Notebook](Robustness_Evaluation.ipynb)
+ - This file contians filtering of candidate policies and used to calculate and analyse robustness metrics for policies.
+
+### Folders
+The repository also contains the following folders
+#### data
+ - came with final assignment files
+#### directed search results
+ - contains all results from directed search method
+#### robustness_final
+ - contains plots and policies used in robustness evaluation
+#### sobol_plots
+ - contains plots from intial sobol analysis
+#### results
+ - contains data generated for initial sobol analysis
+
 
 
