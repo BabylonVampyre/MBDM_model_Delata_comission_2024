@@ -60,7 +60,7 @@ if __name__ == "__main__":
 
     
 
-
+    # Filtering policies
     policies = results_v0[logical_1 & logical_2 & logical_3]
     policies.to_csv("robustness_final/Filtered Policies - to be tested for robustness.csv")
     policies = policies.drop([o.name for o in model.outcomes], axis=1)

@@ -1,0 +1,18 @@
+Python files and notebooks:
+Robustness_Evaluation.ipynb: contians filtering of candidate policies and used to calculate and analyse robustness metrics for policies.
+Robustness_Evaluation.py: used for the generation of data when re-evaluating the selected policies under multiple scenarios. The data generated here is used in Robustness_evaluation.ipynb.
+Robustness.ipynb: calculates and evaluates convergence from directed search policy design
+dike_model_optimization-for-directed-search.py: used to conduct MOEA and generate candidate policy solutions.
+Sobol Analysis.ipynb: contains code that analyses Sobol results
+GSA_sobol - Copy.py: used to conduct and generate data for Sobol analysis using sobol uncertainty sampling.
+Problem Formulations.ipynb: original problem formulation notebook given in the final assignment folder.
+FeatureScoring.ipynb: used to geenrate the heatmaps for the final GSA that is in report appendix.
+
+Folders:
+data: came with final assignment files.
+directed search results: contains all results from directed search method
+robustness_final: contains plots and policies used in robustness evaluation
+sobol_plots: contains plots from intiial sobol analysis
+results: contains data generated for initial sobol analysis
+
+
